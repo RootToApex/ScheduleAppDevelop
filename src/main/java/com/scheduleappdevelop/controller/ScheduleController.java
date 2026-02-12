@@ -27,4 +27,12 @@ public class ScheduleController {
     public ResponseEntity<GetScheduleResponse> getSchedule(@PathVariable Long id) {
         return ResponseEntity.ok(scheduleService.findById(id));
     }
+
+    @PutMapping("/schedules/{id}")
+    public ResponseEntity<GetScheduleResponse> updateSchedule(
+            @PathVariable Long id,
+            @RequestBody UpdateScheduleRequest request
+    ) {
+        return ResponseEntity.ok(scheduleService.update(id, request));
+    }
 }

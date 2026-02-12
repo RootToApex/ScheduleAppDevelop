@@ -24,4 +24,8 @@ public class Schedule {
         this.author = author;
         this.password = password;
     }
+    public void update(String task, String author) {
+        this.task = task;
+        this.author = author;
+    }
 }
