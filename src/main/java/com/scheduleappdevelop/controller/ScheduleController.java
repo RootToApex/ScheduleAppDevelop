@@ -35,4 +35,13 @@ public class ScheduleController {
     ) {
         return ResponseEntity.ok(scheduleService.update(id, request));
     }
+
+    @DeleteMapping("/schedules/{id}")
+    public ResponseEntity<Void> deleteSchedule(
+            @PathVariable Long id,
+            @RequestBody DeleteScheduleRequest request
+    ) {
+        scheduleService.delete(id, request.getPassword());
+        return ResponseEntity.noContent().build(); // 204 No Content 응답
+    }
 }
