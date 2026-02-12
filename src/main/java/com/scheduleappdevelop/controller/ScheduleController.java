@@ -22,4 +22,9 @@ public class ScheduleController {
     public ResponseEntity<List<GetScheduleResponse>> getAll() {
         return ResponseEntity.ok(scheduleService.findAll());
     }
+
+    @GetMapping("/schedules/{id}")
+    public ResponseEntity<GetScheduleResponse> getSchedule(@PathVariable Long id) {
+        return ResponseEntity.ok(scheduleService.findById(id));
+    }
 }

@@ -26,4 +26,12 @@ public class ScheduleService {
                 .map(s -> new GetScheduleResponse(s.getId(), s.getTask(), s.getAuthor()))
                 .toList();
     }
+    @Transactional(readOnly = true)
+    public GetScheduleResponse findById(Long id) {
+        // id로 일정 찾고 없으면 에러 띄우기
+        Schedule schedule = scheduleRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 일정이 존재하지 않습니다."));
+        // 찾은 엔티티를 응답 dto로 변환해서 반환
+        return new GetScheduleResponse(schedule.getId(), schedule.getTask(), schedule.getAuthor());
+    }
 }
