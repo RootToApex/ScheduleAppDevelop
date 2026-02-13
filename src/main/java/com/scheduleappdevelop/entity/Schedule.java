@@ -14,17 +14,20 @@ public class Schedule extends Timestamped {
     private Long id;
 
     private String task;      // 할 일 내용
-    private String author;    // 작성자 이름
+
+    // User 엔티티와 연관 관계 설정
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;    // 작성자 이름
     private String password;  // 비밀번호
 
     // 일정 생성 시 사용할 생성자
-    public Schedule(String task, String author, String password) {
+    public Schedule(String task, User user, String password) {
         this.task = task;
-        this.author = author;
+        this.user = user;
         this.password = password;
     }
-    public void update(String task, String author) {
+    public void update(String task) {
         this.task = task;
-        this.author = author;
     }
 }

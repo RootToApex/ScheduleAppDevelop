@@ -16,7 +16,7 @@ public class GetScheduleResponse {
     public GetScheduleResponse(Schedule schedule) {
         this.id = schedule.getId();
         this.task = schedule.getTask();
-        this.author = schedule.getAuthor();
+        this.author = schedule.getUser().getUsername();
         this.createdAt = schedule.getCreatedAt();
         this.updatedAt = schedule.getUpdatedAt();
     }

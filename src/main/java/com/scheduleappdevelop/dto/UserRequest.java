@@ -5,9 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CreateScheduleRequest {
-
-    private String task;
-    private Long userId;
-    private String password;
+public class UserRequest {
+    private String username;
+    private String email;
 }

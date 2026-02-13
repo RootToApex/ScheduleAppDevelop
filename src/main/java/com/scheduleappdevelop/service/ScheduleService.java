@@ -2,7 +2,9 @@ package com.scheduleappdevelop.service;
 
 import com.scheduleappdevelop.dto.*;
 import com.scheduleappdevelop.entity.Schedule;
+import com.scheduleappdevelop.entity.User;
 import com.scheduleappdevelop.repository.ScheduleRepository;
+import com.scheduleappdevelop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +17,14 @@ import java.util.stream.Collectors;
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+    private final UserRepository userRepository;
 
     // 일정 생성
     @Transactional
     public GetScheduleResponse save(CreateScheduleRequest request) {
-        Schedule schedule = new Schedule(request.getTask(), request.getAuthor(), request.getPassword());
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. ID: " + request.getUserId()));
+        Schedule schedule = new Schedule(request.getTask(), user, request.getPassword());
         Schedule saved = scheduleRepository.save(schedule);
         return new GetScheduleResponse(saved);
     }
@@ -52,7 +57,7 @@ public class ScheduleService {
         }
 
         // 데이터 수정 (Dirty Checking에 의해 자동 저장)
-        schedule.update(request.getTask(), request.getAuthor());
+        schedule.update(request.getTask());
 
         // 수정된 결과를 응답 DTO로 변환해서 반환
         return new GetScheduleResponse(schedule);
