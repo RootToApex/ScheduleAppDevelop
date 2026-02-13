@@ -6,9 +6,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Table(name = "schedules")
 @NoArgsConstructor // JPA를 위한 기본 생성자
-public class Schedule {
+public class Schedule extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
