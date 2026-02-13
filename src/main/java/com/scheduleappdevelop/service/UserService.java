@@ -32,7 +32,7 @@ public class UserService {
         return new UserResponse(user);
     }
 
-    // 유저 전체 조회 (필요하다면 추가)
+    // 유저 전체 조회
     @Transactional(readOnly = true)
     public List<UserResponse> findAll() {
         return userRepository.findAll().stream()
