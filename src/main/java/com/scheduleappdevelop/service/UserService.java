@@ -19,7 +19,7 @@ public class UserService {
     // 유저 등록
     @Transactional
     public UserResponse save(UserRequest request) {
-        User user = new User(request.getUsername(), request.getEmail(), request.getPassword());
+        User user = new User(request.getUsername(), request.getEmail());
         User savedUser = userRepository.save(user);
         return new UserResponse(savedUser);
     }
@@ -32,22 +32,11 @@ public class UserService {
         return new UserResponse(user);
     }
 
-    // 유저 전체 조회
+    // 유저 전체 조회 (필요하다면 추가)
     @Transactional(readOnly = true)
     public List<UserResponse> findAll() {
         return userRepository.findAll().stream()
                 .map(UserResponse::new)
                 .collect(Collectors.toList());
-    }
-
-    public User login(String email, String password) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
-
-        if (!user.getPassword().equals(password)) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
-
-        return user;
     }
 }
