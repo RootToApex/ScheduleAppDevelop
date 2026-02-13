@@ -21,11 +21,13 @@ public class ScheduleService {
 
     // 일정 생성
     @Transactional
-    public GetScheduleResponse save(CreateScheduleRequest request) {
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. ID: " + request.getUserId()));
-        Schedule schedule = new Schedule(request.getTask(), user, request.getPassword());
+    public GetScheduleResponse save(String task, Long userId, String password) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+
+        Schedule schedule = new Schedule(task, user, password);
         Schedule saved = scheduleRepository.save(schedule);
+
         return new GetScheduleResponse(saved);
     }
 

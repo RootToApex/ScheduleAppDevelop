@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "user") // DB 테이블 이름을 user로 지정
 @NoArgsConstructor
-public class User extends Timestamped { // 유저도 생성/수정일이 있으면 좋으니까!
+public class User extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +20,17 @@ public class User extends Timestamped { // 유저도 생성/수정일이 있으�
     @Column(nullable = false, unique = true)
     private String email; // 유저 이메일 (중복 방지)
 
-    public User(String username, String email) {
-        this.username = username;
-        this.email = email;
-    }
+    @Column(nullable = false)
+    private String password;
 
-    public void update(String username, String email) {
+
+    public User(String username, String email, String password) {
+
+        if (password == null || password.length() < 8) {
+            throw new IllegalArgumentException("비밀번호는 최소 8글자 이상이어야 합니다.");
+        }
         this.username = username;
         this.email = email;
+        this.password = password;
     }
 }
