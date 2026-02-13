@@ -33,4 +33,9 @@ public class User extends Timestamped {
         this.email = email;
         this.password = password;
     }
+
+    public void update(String username, String email) {
+        this.username = username;
+        this.email = email;
+    }
 }
